@@ -12,16 +12,40 @@
 
 </head>
 <body>
-    <div id="pokevichos" class="container">
-        <h1 class="col text-center">OG's</h1>
+    <h1 class="col text-center">OG's</h1>
+    <div class="row">
 
+        <div id="pokemones" class=" col-8" >
+            
+        </div>
+        <div class=" offset-1 col-3">
+            <h3 id="nombre">nombre pokemon</h3>
+            <img id="pokemono" src="">
+            <h3 id="tipo">tipo</h3>
+            <h3 id="altura">altura</h3>
+            <h3 id="peso">peso</h3>
+        </div>
+        
     </div>
     
     <script>
         $(document).ready(function(){
             for (let i = 1; i <= 151; i++) {
-                $("#pokevichos").append(`<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${i}.png" class="col-1">`)
+                $("#pokemones").append(`<img id="${i}" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${i}.png" class="col-2">`)
             }
+            $("img").on("click",function(){
+                let id = $(this).attr("id");
+                let imagen = $(this).attr("src");
+                $.get(`http://pokeapi.co/api/v2/pokemon/${id}`, function(data){
+                    $("#nombre").text("nombre: "+ data.name)
+                    $("#pokemono").attr("src",imagen)
+                    $("#tipo").text(data.types[0].type.name)
+                    $("#altura").text("altura: "+ data.height)
+                    $("#peso").text("peso: " + data.weight)
+                    console.log(data)
+                })
+            })
+
         });
     </script>
 </body>
